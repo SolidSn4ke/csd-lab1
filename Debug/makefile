@@ -61,8 +61,8 @@ all: main-build
 main-build: lab-1.elf secondary-outputs
 
 # Tool invocations
-lab-1.elf lab-1.map: $(OBJS) $(USER_OBJS) /home/artemii/ITMO/CSD/lab-1/lab-1/STM32F427VITX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "lab-1.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"/home/artemii/ITMO/CSD/lab-1/lab-1/STM32F427VITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="lab-1.map" -Wl,--gc-sections -static -specs=rdimon.specs --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+lab-1.elf lab-1.map: $(OBJS) $(USER_OBJS) ../STM32F427VITX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "lab-1.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"../STM32F427VITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="lab-1.map" -Wl,--gc-sections -static -specs=rdimon.specs --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
