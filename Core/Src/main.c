@@ -308,18 +308,30 @@ static void console_update(void)
   }
   else
   {
-    /* Echo every received byte, including line terminators. */
+    size_t echo_size = 1U;
     console_output[0] = ch;
     console_output[1] = '\0';
+    if (ch == '\b' || ch == '\x7f')
+    {
+      /* PuTTY can send BS or DEL. Erase only an actual buffered character. */
+      echo_size = 0U;
+      if (command_receiver.index > 0 && !command_receiver.overflow)
+      {
+        memcpy(console_output, "\b \b", 3);
+        echo_size = 3U;
+      }
+      console_output[echo_size] = '\0';
+    }
     LineStatus line = receive_line_char(&command_receiver, command_buffer,
                                         sizeof(command_buffer), ch);
     if (line == LINE_READY)
-      command_reply(command_buffer, console_output + 1, sizeof(console_output) - 1);
+      command_reply(command_buffer, console_output + echo_size,
+                    sizeof(console_output) - echo_size);
     else if (line == LINE_OVERFLOW)
-      (void)snprintf(console_output + 1, sizeof(console_output) - 1,
+      (void)snprintf(console_output + echo_size, sizeof(console_output) - echo_size,
                      "\r\nERROR: line too long or damaged\r\n");
     /* The echo may be NUL, so do not use strlen on its first byte. */
-    console_output_size = 1U + strlen(console_output + 1);
+    console_output_size = echo_size + strlen(console_output + echo_size);
     return;
   }
   console_output_size = strlen(console_output);

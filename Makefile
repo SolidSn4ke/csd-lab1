@@ -9,10 +9,10 @@ ELF       := $(BUILD_DIR)/$(PROJECT).elf
 OPENOCD     := openocd
 OPENOCD_CFG := SDK1_1_M FTDBG.cfg
 TARGET      := STM32F427VITx.cpu
-JTAG_SPEED  ?= 500
+JTAG_SPEED  ?= 100
 JOBS        ?= $(shell nproc)
 
-OPENOCD_SCRIPT = $(TARGET) configure -event reset-start {adapter speed $(JTAG_SPEED)}; $(TARGET) configure -event reset-init {adapter speed $(JTAG_SPEED)}; program $(ELF) verify reset exit
+OPENOCD_SCRIPT = adapter speed $(JTAG_SPEED); $(TARGET) configure -event reset-start {adapter speed $(JTAG_SPEED)}; $(TARGET) configure -event reset-init {adapter speed $(JTAG_SPEED)}; program $(ELF) verify reset exit
 
 .PHONY: all build flash flash-only clean rebuild
 

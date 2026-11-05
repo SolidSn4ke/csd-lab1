@@ -1,0 +1,97 @@
+@startuml traffic_light_main
+title Алгоритм работы светофора
+
+skinparam defaultFontName SansSerif
+skinparam shadowing false
+
+start
+:Инициализировать HAL, системную частоту и GPIO;
+:green_requested = 0\nprevious_button = 0;
+:traffic_enter(RED, HAL_GetTick());
+
+while (true) is (следующая итерация)
+  :now = HAL_GetTick();
+  :button = check_button(now)\nОпрос кнопки с подавлением дребезга;
+  :press_event = button && !previous_button\nprevious_button = button;
+  note right
+    Удержание кнопки не создаёт новых нажатий.
+    Все интервалы указаны в миллисекундах.
+  end note
+
+  :elapsed = (uint32_t)(now - state_started);
+
+  if (Обнаружено новое нажатие?) then (да)
+    if (Состояние — мигающий зелёный\nили жёлтый?) then (да)
+      :green_requested = 1\nЗапомнить запрос на ближайший красный;
+    else (нет)
+      if (Состояние — красный?) then (да)
+        if (elapsed < red_duration\nи red_duration - elapsed > 3000?) then (да)
+          :red_duration = elapsed + 3000\nОставить 3 секунды красного от текущего момента;
+        endif
+      endif
+    endif
+  endif
+
+  switch (Текущее состояние)
+  case (Красный)
+    if (elapsed >= red_duration?) then (да)
+      :traffic_enter(GREEN, now);
+    endif
+
+  case (Зелёный)
+    if (elapsed >= 3000?) then (да)
+      :traffic_enter(GREEN_BLINK, now);
+    endif
+
+  case (Мигающий зелёный)
+    if (elapsed >= 3000?) then (да)
+      :traffic_enter(YELLOW, now);
+    else (нет)
+      if ((elapsed / 500) % 2 == 0?) then (да)
+        :Включить зелёный;
+      else (нет)
+        :Выключить зелёный;
+      endif
+    endif
+
+  case (Жёлтый)
+    if (elapsed >= 2000?) then (да)
+      :traffic_enter(RED, now);
+    endif
+  endswitch
+endwhile
+-[hidden]->
+detach
+
+@enduml
+
+
+@startuml traffic_light_enter
+title Переход в новое состояние — traffic_enter(next, now)
+
+skinparam defaultFontName SansSerif
+skinparam shadowing false
+
+start
+:traffic_state = next\nstate_started = now;
+:Выключить красный, зелёный и жёлтый;
+
+switch (Новое состояние)
+case (Красный)
+  if (green_requested == 1?) then (да)
+    :red_duration = 3000;
+  else (нет)
+    :red_duration = 12000;
+  endif
+  :green_requested = 0\nЗапрос относится только к этому красному;
+  :Включить красный;
+
+case (Зелёный или мигающий зелёный)
+  :Включить зелёный;
+
+case (Жёлтый)
+  :Включить жёлтый;
+endswitch
+
+stop
+@enduml

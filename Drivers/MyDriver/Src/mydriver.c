@@ -314,6 +314,13 @@ LineStatus receive_line_char(LineReceiver *rx, char *buf, size_t size, char ch)
     if (rx->overflow)
         return LINE_PENDING;
 
+    if (ch == '\b' || ch == '\x7f')
+    {
+        if (rx->index > 0)
+            buf[--rx->index] = '\0';
+        return LINE_PENDING;
+    }
+
     if (rx->index >= size - 1)
     {
         rx->overflow = 1;
