@@ -26,8 +26,8 @@ Drivers/MyDriver/Src/mydriver.o: ../Drivers/MyDriver/Src/mydriver.c \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h \
- ../Core/Inc/gpio.h ../Core/Inc/main.h ../Core/Inc/my_gpio.h \
- ../Core/Inc/usart.h ../Drivers/MyDriver/Src/../Inc/byte_queue.h
+ ../Drivers/MyDriver/Src/../Inc/my_uart.h ../Core/Inc/gpio.h \
+ ../Core/Inc/main.h ../Core/Inc/my_gpio.h
 ../Drivers/MyDriver/Src/../Inc/mydriver.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:
 ../Core/Inc/stm32f4xx_hal_conf.h:
@@ -55,8 +55,7 @@ Drivers/MyDriver/Src/mydriver.o: ../Drivers/MyDriver/Src/mydriver.c \
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h:
+../Drivers/MyDriver/Src/../Inc/my_uart.h:
 ../Core/Inc/gpio.h:
 ../Core/Inc/main.h:
 ../Core/Inc/my_gpio.h:
-../Core/Inc/usart.h:
-../Drivers/MyDriver/Src/../Inc/byte_queue.h:

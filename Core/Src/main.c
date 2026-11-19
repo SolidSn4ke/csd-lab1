@@ -18,7 +18,6 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "usart.h"
 #include "gpio.h"
 #include <string.h>
 
@@ -367,8 +366,8 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-  MX_USART6_UART_Init();
   /* USER CODE BEGIN 2 */
+  /* Initializes our register UART driver; CubeMX USART6 init must stay disabled. */
   if (uart_receive_init(uart_mode) != HAL_OK)
     Error_Handler();
 

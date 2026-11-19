@@ -22,6 +22,7 @@
 #include "stm32f4xx_it.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "../../Drivers/MyDriver/Inc/my_uart.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -204,6 +205,9 @@ void SysTick_Handler(void)
 void USART6_IRQHandler(void)
 {
   /* USER CODE BEGIN USART6_IRQn 0 */
+  my_uart_irq_handler();
+  /* USART6 is owned by our driver; do not dispatch to HAL below. */
+  return;
 
   /* USER CODE END USART6_IRQn 0 */
   HAL_UART_IRQHandler(&huart6);

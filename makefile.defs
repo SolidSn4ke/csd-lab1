@@ -1,0 +1,8 @@
+# User extension included by the CubeIDE-generated makefile.
+# Older generated source lists do not yet contain my_uart.c.
+# Once CubeIDE discovers it, use the generated object entry instead.
+ifeq ($(filter ./Drivers/MyDriver/Src/my_uart.o Drivers/MyDriver/Src/my_uart.o,$(OBJS)),)
+USER_OBJS += ./Drivers/MyDriver/Src/my_uart.o
+endif
+
+-include ./Drivers/MyDriver/Src/my_uart.d

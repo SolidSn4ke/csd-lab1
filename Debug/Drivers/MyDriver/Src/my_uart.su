@@ -1,0 +1,15 @@
+../Drivers/CMSIS/Include/core_cm4.h:1688:22:__NVIC_EnableIRQ	16	static
+../Drivers/CMSIS/Include/core_cm4.h:1724:22:__NVIC_DisableIRQ	16	static
+../Drivers/CMSIS/Include/core_cm4.h:1777:22:__NVIC_ClearPendingIRQ	16	static
+../Drivers/CMSIS/Include/core_cm4.h:1816:22:__NVIC_SetPriority	16	static
+../Drivers/MyDriver/Src/../Inc/byte_queue.h:16:20:byte_queue_clear	16	static
+../Drivers/MyDriver/Src/../Inc/byte_queue.h:22:19:byte_queue_push	24	static
+../Drivers/MyDriver/Src/../Inc/byte_queue.h:33:19:byte_queue_pop	16	static
+../Drivers/MyDriver/Src/my_uart.c:20:15:MX_MyUSART6_Init	48	static
+../Drivers/MyDriver/Src/my_uart.c:33:15:my_uart_init	72	static
+../Drivers/MyDriver/Src/my_uart.c:166:15:my_uart_receive	40	static
+../Drivers/MyDriver/Src/my_uart.c:211:15:my_uart_transmit	48	static
+../Drivers/MyDriver/Src/my_uart.c:260:15:my_uart_rx_status	40	static
+../Drivers/MyDriver/Src/my_uart.c:295:15:my_uart_tx_status	32	static
+../Drivers/MyDriver/Src/my_uart.c:321:6:my_uart_irq_handler	16	static
+../Drivers/MyDriver/Src/my_uart.c:354:15:my_uart_set_mode	48	static
